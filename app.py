@@ -7,9 +7,20 @@ import config
 
 app = FastAPI(title="Assistente Virtual - TEC II (RAG + Ollama)")
 
-rag = SimpleRAG("sentence-transformers/all-MiniLM-L6-v2", 500, 50)
-rag.load_document("data/base.txt") 
-rag.create_index()
+# Inicializamos o RAG no evento de startup para deixar os logs visíveis
+# e informar o usuário sobre o progresso (essa etapa pode demorar).
+rag = None
+
+
+@app.on_event("startup")
+def startup_event():
+    global rag
+    print("Inicializando RAG (pode demorar alguns minutos)...")
+    # Usar as configurações definidas em config.py
+    rag = SimpleRAG(config.MODEL_NAME, config.CHUNK_SIZE, config.CHUNK_OVERLAP)
+    rag.load_document("data/base.md")
+    rag.create_index()
+    print("RAG inicializado com sucesso.")
 
 class ChatRequest(BaseModel):
     question: str
@@ -49,3 +60,11 @@ def chat(request: ChatRequest):
         "retrieved_chunks": retrieved,
         "latency_ms": latency
     }
+
+
+if __name__ == "__main__":
+    # Ao executar `python app.py` queremos iniciar o servidor Uvicorn
+    # Usamos o módulo path "app:app" para habilitar reload durante desenvolvimento
+    import uvicorn
+
+    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
