@@ -33,7 +33,7 @@ class SimpleRAG:
         self.index = faiss.IndexFlatL2(dim)
         self.index.add(embeddings)
 
-    def retrieve(self, query, top_k=3):
+    def retrieve(self, query, top_k=1):
         q_emb = self.model.encode([query])
         q_emb = np.array(q_emb)
         if q_emb.ndim == 1:
