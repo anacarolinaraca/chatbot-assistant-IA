@@ -12,7 +12,6 @@ Este projeto implementa um sistema RAG (Retrieval-Augmented Generation) que perm
 - FAISS
 - FastAPI
 - LLM: gemma:2b
-- 
 
 ## Como Usar 
 
