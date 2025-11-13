@@ -2,12 +2,17 @@
 
 ## Sobre
 
-Este projeto tem como objetivo responder perguntas relacionadas à saúde mental.
+Este projeto implementa um sistema RAG (Retrieval-Augmented Generation) que permite ao assistente virtual responder perguntas usando uma base de conhecimento relacionadas à saúde mental.
 
 ## Tecnologias Utilizadas
 
 - Python
 - Ollama
+- Sentence Transformers
+- FAISS
+- FastAPI
+- LLM: gemma:2b
+- 
 
 ## Como Usar 
 
@@ -46,4 +51,9 @@ ollama serve
 6. Inicie o servidor FastAPI
 ```
 python app.py
+```
+
+7. Rode o chat para fazer perguntas
+```
+python chat.py
 ```
